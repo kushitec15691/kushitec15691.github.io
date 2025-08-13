@@ -10,30 +10,35 @@
   <meta property="og:description" content="Python · SQL · Azure · ML · Analytics" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="1691681327177.jpg" />
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1020" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3f7ff" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0c1230" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📊</text></svg>">
   <style>
     :root{
-      --bg:#0b1020; --card:#121830; --text:#e8ecff; --muted:#aab3d6; --accent:#7aa2ff; --accent-2:#9effce; --ring:#2a3b7a; --shadow:rgba(0,0,0,.35);
-      --bg-light:#ffffff; --card-light:#f6f7fb; --text-light:#0f1222; --muted-light:#4e577a; --ring-light:#cfd7ff;
+      --bg:#0c1230; /* deep navy gradient base */
+      --bg2:#141b3e;
+      --card:#121830; --text:#e8ecff; --muted:#aab3d6; --accent:#7aa2ff; --accent-2:#9effce; --ring:#2a3b7a; --shadow:rgba(0,0,0,.35);
+      --bg-light:#f6fbff; --bg2-light:#eef3ff; --card-light:#f6f7fb; --text-light:#0f1222; --muted-light:#4e577a; --ring-light:#cfd7ff;
       --radius:18px; --max:1080px;
     }
     html{scroll-behavior:smooth}
-    body{margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; line-height:1.6; background:var(--bg); color:var(--text);} 
-    .light body{background:var(--bg-light); color:var(--text-light)}
+    body{
+      margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      line-height:1.6;
+      background:radial-gradient(1200px 800px at 20% -10%, var(--bg2) 0%, var(--bg) 40%, #0a0f23 100%);
+      color:var(--text);
+    }
+    .light body{
+      background:radial-gradient(1200px 800px at 20% -10%, var(--bg2-light) 0%, var(--bg-light) 60%, #ffffff 100%);
+      color:var(--text-light);
+    }
 
-    /* ===== Animated Data Background ===== */
-    .bg-net, .bg-flow{position:fixed; inset:0; z-index:-2; pointer-events:none}
-    .bg-net{opacity:.18; animation:drift 80s linear infinite}
-    .bg-flow{opacity:.10}
-    .light .bg-net{opacity:.12}
-    .light .bg-flow{opacity:.07}
-    @keyframes drift{from{transform:translate3d(0,0,0)} to{transform:translate3d(-160px,-160px,0)}}
-    @media (prefers-reduced-motion:reduce){ .bg-net{animation:none} }
+    /* ===== animated canvas background ===== */
+    #data-bg{position:fixed; inset:0; z-index:-2; width:100%; height:100%; display:block; pointer-events:none}
 
-    header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.2) blur(10px); background:linear-gradient(180deg, rgba(10,14,28,.8), rgba(10,14,28,.2)); border-bottom:1px solid var(--ring)}
-    .light header{background:linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.2)); border-bottom:1px solid var(--ring-light)}
+    header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.2) blur(10px);
+      background:linear-gradient(180deg, rgba(10,14,28,.75), rgba(10,14,28,.15)); border-bottom:1px solid var(--ring)}
+    .light header{background:linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.15)); border-bottom:1px solid var(--ring-light)}
     .nav{max-width:var(--max); margin:0 auto; display:flex; gap:16px; align-items:center; padding:10px 16px}
     .brand{display:flex; align-items:center; gap:10px; font-weight:700}
     .brand .dot{width:10px; height:10px; border-radius:999px; background:linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow:0 0 20px var(--accent)}
@@ -100,36 +105,8 @@
   </script>
 </head>
 <body>
-  <!-- Data background (SVG network + flowing lines) -->
-  <svg class="bg-net" viewBox="0 0 600 600" aria-hidden="true">
-    <defs>
-      <pattern id="grid" width="120" height="120" patternUnits="userSpaceOnUse">
-        <path d="M0 60H120 M60 0V120" stroke="rgba(122,162,255,.18)" stroke-width="1"/>
-        <circle cx="60" cy="60" r="2" fill="rgba(158,255,206,.25)"/>
-      </pattern>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#grid)"/>
-  </svg>
-  <svg class="bg-flow" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">
-    <defs>
-      <linearGradient id="flow" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="rgba(122,162,255,.0)"/>
-        <stop offset=".5" stop-color="rgba(122,162,255,.18)"/>
-        <stop offset="1" stop-color="rgba(122,162,255,.0)"/>
-      </linearGradient>
-    </defs>
-    <g stroke="url(#flow)" stroke-width="2" fill="none" stroke-dasharray="60 320">
-      <path d="M-50,200 C200,220 300,180 550,200 S900,240 1050,210">
-        <animate attributeName="stroke-dashoffset" values="0;380" dur="14s" repeatCount="indefinite" />
-      </path>
-      <path d="M-50,500 C200,520 300,480 550,500 S900,540 1050,510">
-        <animate attributeName="stroke-dashoffset" values="0;380" dur="18s" repeatCount="indefinite" />
-      </path>
-      <path d="M-50,800 C200,820 300,780 550,800 S900,840 1050,810">
-        <animate attributeName="stroke-dashoffset" values="0;380" dur="20s" repeatCount="indefinite" />
-      </path>
-    </g>
-  </svg>
+  <!-- Animated data background -->
+  <canvas id="data-bg" aria-hidden="true"></canvas>
 
   <header>
     <nav class="nav">
@@ -214,7 +191,7 @@
           <h3>Sogeti (Capgemini) — BI/Data Analytics Intern</h3>
           <p class="muted">Borlänge, Sweden</p>
           <ul>
-            <li>Azure ETL (ADF → Databricks → SQL) with Medallion layers; documented data flows and lineage.</li>
+            <li>Azure ETL (ADF → Databricks → SQL) with Medallion layers; data flows & lineage documentation.</li>
             <li>Power BI dashboards for lead-time variance & on-time delivery.</li>
             <li>Fact/dimension modeling and data-quality checks with analytics engineers.</li>
           </ul>
@@ -295,7 +272,7 @@
     <small>© <span id="year"></span> Kushmi Anuththara Chandrasena. Built with HTML/CSS/JS. Hosted on GitHub Pages.</small>
   </footer>
 
-  <!-- Robust JS (IIFE) -->
+  <!-- JS -->
   <script>
   (() => {
     // theme
@@ -305,8 +282,8 @@
     if (modeBtn) {
       modeBtn.addEventListener('click', () => {
         document.documentElement.classList.toggle('light');
-        localStorage.setItem('mode',
-          document.documentElement.classList.contains('light') ? 'light' : 'dark');
+        localStorage.setItem('mode', document.documentElement.classList.contains('light') ? 'light' : 'dark');
+        bg.recolor(); // update background colors on theme change
       });
     }
     // year
@@ -346,7 +323,6 @@
         repo:'https://github.com/kushitec15691/gps-mobility-data-analysis',
         demo:'#', imageAlt:'Geospatial mobility', img:'mobility.png' }
     ];
-
     const grid = document.getElementById('project-grid');
     if (grid) {
       projects.forEach(p => {
@@ -371,6 +347,99 @@
         grid.appendChild(card);
       });
     }
+
+    // ===== Canvas data background =====
+    const bg = (() => {
+      const c = document.getElementById('data-bg');
+      const ctx = c.getContext('2d');
+      let w, h, dpr, nodes, phase = 0, motionOK = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const NODES = 80; // performance-friendly
+
+      function colors(){
+        const light = document.documentElement.classList.contains('light');
+        return {
+          dot: light ? 'rgba(60,100,220,.25)' : 'rgba(122,162,255,.35)',
+          link: light ? 'rgba(60,100,220,.15)' : 'rgba(122,162,255,.22)',
+          line: light ? 'rgba(60,100,220,.20)' : 'rgba(122,162,255,.30)'
+        };
+      }
+      let palette = colors();
+
+      function resize(){
+        dpr = Math.max(1, window.devicePixelRatio || 1);
+        w = c.clientWidth; h = c.clientHeight;
+        c.width = Math.floor(w * dpr);
+        c.height = Math.floor(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function initNodes(){
+        nodes = Array.from({length:NODES}, () => ({
+          x: Math.random()*w, y: Math.random()*h,
+          vx: (Math.random()*2-1)*0.25, vy: (Math.random()*2-1)*0.25
+        }));
+      }
+
+      function step(){
+        if(!motionOK) return; // respects reduced motion
+        ctx.clearRect(0,0,w,h);
+
+        // flowing “sparkline” graphs
+        phase += 0.008;
+        drawSparkline(0.22, 32);
+        drawSparkline(0.50, 24);
+        drawSparkline(0.78, 28);
+
+        // particle network
+        const maxDist = 110;
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = palette.link;
+        nodes.forEach((p,i) => {
+          p.x += p.vx; p.y += p.vy;
+          if(p.x<-10) p.x=w+10; if(p.x>w+10) p.x=-10;
+          if(p.y<-10) p.y=h+10; if(p.y>h+10) p.y=-10;
+
+          // dots
+          ctx.fillStyle = palette.dot;
+          ctx.beginPath(); ctx.arc(p.x, p.y, 1.6, 0, Math.PI*2); ctx.fill();
+
+          // links
+          for(let j=i+1;j<nodes.length;j++){
+            const q = nodes[j];
+            const dx = p.x-q.x, dy=p.y-q.y, dist = Math.hypot(dx,dy);
+            if(dist<maxDist){
+              ctx.globalAlpha = 1 - dist/maxDist;
+              ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.stroke();
+            }
+          }
+          ctx.globalAlpha = 1;
+        });
+
+        requestAnimationFrame(step);
+      }
+
+      function drawSparkline(yFrac, amplitude){
+        const {line} = palette;
+        ctx.strokeStyle = line; ctx.lineWidth = 2;
+        ctx.beginPath();
+        const yBase = h*yFrac;
+        const k = 0.008; // frequency
+        for(let x=0;x<=w;x+=8){
+          const y = yBase + Math.sin((x*k)+phase*2)*amplitude*0.6 + Math.cos((x*k*0.7)+phase)*amplitude*0.4;
+          if(x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+      }
+
+      function recolor(){ palette = colors(); }
+      function start(){
+        resize(); initNodes(); if(motionOK) requestAnimationFrame(step);
+      }
+      window.addEventListener('resize', resize, {passive:true});
+      start();
+      return {recolor};
+    })();
+
   })();
   </script>
 </body>
