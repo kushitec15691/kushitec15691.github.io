@@ -15,8 +15,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📊</text></svg>">
   <style>
     :root{
-      --bg:#0c1230; /* deep navy gradient base */
-      --bg2:#141b3e;
+      --bg:#0c1230; --bg2:#141b3e;
       --card:#121830; --text:#e8ecff; --muted:#aab3d6; --accent:#7aa2ff; --accent-2:#9effce; --ring:#2a3b7a; --shadow:rgba(0,0,0,.35);
       --bg-light:#f6fbff; --bg2-light:#eef3ff; --card-light:#f6f7fb; --text-light:#0f1222; --muted-light:#4e577a; --ring-light:#cfd7ff;
       --radius:18px; --max:1080px;
@@ -44,26 +43,36 @@
     .brand .dot{width:10px; height:10px; border-radius:999px; background:linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow:0 0 20px var(--accent)}
     .spacer{flex:1}
     .nav a{color:inherit; text-decoration:none; opacity:.9}
-    .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; border:1px solid var(--ring); background:transparent; color:inherit; cursor:pointer; text-decoration:none}
+    .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; border:1px solid var(--ring); background:transparent; color:inherit; cursor:pointer; text-decoration:none; transition:transform .06s ease}
     .btn:hover{transform:translateY(-1px)}
     main{max-width:var(--max); margin:0 auto; padding:28px 16px 80px}
     section{margin-top:48px}
-    .hero{display:grid; grid-template-columns:1.2fr .8fr; gap:28px; align-items:center}
+
+    .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center}
     @media (max-width:900px){.hero{grid-template-columns:1fr}}
     .card{background:var(--card); border:1px solid var(--ring); border-radius:var(--radius); box-shadow:0 12px 30px var(--shadow); overflow:hidden}
     .light .card{background:var(--card-light); border-color:var(--ring-light)}
     .pad{padding:24px}
-    h1{font-size:clamp(32px,4vw,48px); line-height:1.1; margin:0 0 8px}
+
+    h1{font-size:clamp(30px,4vw,44px); line-height:1.2; margin:0 0 8px}
     h2{font-size:clamp(24px,3vw,32px); margin:0 0 10px}
     h3{margin:0 0 8px}
     p.lead{font-size:18px; color:var(--muted)}
+
+    /* role chips under the name */
+    .roles{display:flex; flex-wrap:wrap; gap:10px; margin:12px 0 8px}
+    .role{padding:8px 14px; border-radius:999px; border:1px solid var(--ring); background:linear-gradient(135deg, rgba(122,162,255,.15), rgba(158,255,206,.12)); font-weight:600; letter-spacing:.2px}
+    .role strong{font-size:clamp(16px,2.2vw,18px)}
+
     .tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
     .tag{padding:6px 10px; border-radius:999px; background:rgba(122,162,255,.15); border:1px solid var(--ring); font-size:12px}
+
     .grid{display:grid; gap:16px}
     .grid.cols-3{grid-template-columns:repeat(3,1fr)}
     .grid.cols-2{grid-template-columns:repeat(2,1fr)}
     @media (max-width:1000px){.grid.cols-3{grid-template-columns:repeat(2,1fr)}}
     @media (max-width:700px){.grid.cols-3, .grid.cols-2{grid-template-columns:1fr}}
+
     .proj{display:flex; flex-direction:column; height:100%}
     .proj .thumb{aspect-ratio:16/9; background:linear-gradient(135deg, rgba(122,162,255,.15), rgba(158,255,206,.15)); border-bottom:1px solid var(--ring); background-size:cover; background-position:center; background-repeat:no-repeat}
     .proj h3{margin:0 0 6px; font-size:18px}
@@ -71,24 +80,27 @@
     .proj .actions{margin-top:auto; display:flex; gap:10px}
     .badge{padding:6px 10px; border:1px dashed var(--ring); border-radius:999px; font-size:12px}
     .kpis{display:flex; flex-wrap:wrap; gap:12px}
-    .kpi{flex:1; min-width:180px; padding:16px 18px; border-radius:16px; border:1px solid var(--ring); background:transparent}
+    .kpi{flex:1; min-width:220px; padding:16px 18px; border-radius:16px; border:1px solid var(--ring); background:transparent}
     footer{max-width:var(--max); margin:60px auto 40px; padding:0 16px; color:var(--muted)}
     .muted{color:var(--muted)}
     .floating{position:fixed; bottom:20px; right:20px}
     .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
     pre{background:#0d1228; color:#e8ecff; padding:14px; border-radius:12px; border:1px solid var(--ring); overflow:auto}
     .light pre{background:#f1f3fb; color:#0f1222; border-color:var(--ring-light)}
+
     /* avatar & about */
     .avatar{margin:10px 0 14px}
-    .avatar img{width:120px;height:120px;object-fit:cover;border-radius:50%;border:2px solid var(--ring);box-shadow:0 8px 20px var(--shadow)}
-    @media (max-width:700px){.avatar img{width:96px;height:96px}}
-    .about-photo{width:140px;height:140px;object-fit:cover;border-radius:16px;border:1px solid var(--ring);box-shadow:0 6px 16px var(--shadow);float:right;margin:0 0 10px 16px}
+    .avatar img{width:160px;height:160px;object-fit:cover;border-radius:50%;border:2px solid var(--ring);box-shadow:0 8px 20px var(--shadow)}
+    @media (max-width:700px){.avatar img{width:120px;height:120px}}
+    .about-photo{width:180px;height:180px;object-fit:cover;border-radius:16px;border:1px solid var(--ring);box-shadow:0 6px 16px var(--shadow);float:right;margin:0 0 10px 16px}
     @media (max-width:700px){.about-photo{float:none;display:block;margin:0 auto 12px}}
-    /* form */
+
+    /* form – fixed spacing & overflow */
+    *,:before,:after{box-sizing:border-box}
     input, textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--ring);background:transparent;color:inherit}
     input:focus, textarea:focus{outline:none;box-shadow:0 0 0 3px var(--ring)}
-    textarea{min-height:120px}
-    .formgrid{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+    textarea{min-height:120px;resize:vertical}
+    .formgrid{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;row-gap:12px;margin-bottom:12px}
     @media (max-width:700px){.formgrid{grid-template-columns:1fr}}
   </style>
   <script type="application/ld+json">
@@ -126,27 +138,48 @@
   <main id="home">
     <section class="hero">
       <div class="card pad">
-        <h1>Hi, I’m Kushmi Anuththara Chandrasena — Data Analyst & BI Developer <span class="muted">(Junior Data Engineer)</span></h1>
+        <h1>Hi, I’m Kushmi Anuththara Chandrasena</h1>
+
+        <div class="roles">
+          <span class="role"><strong>Data Analyst</strong></span>
+          <span class="role"><strong>BI Developer</strong></span>
+          <span class="role"><strong>Junior Data Engineer</strong></span>
+        </div>
+
         <figure class="avatar">
           <img src="1691681327177.jpg" alt="Kushmi Anuththara Chandrasena headshot">
         </figure>
-        <p class="lead">MSc in Data Science · 5+ years in IT · Python · SQL · Azure · BI. Entry-level Data Analyst/BI, building clean data pipelines and actionable analytics. Based in Dalarna; open to Stockholm, Gothenburg, Malmö & Uppsala. Fluent in English; basic Swedish.</p>
+
+        <p class="lead">MSc in Data Science with 5+ years in IT. I build clean data pipelines and actionable analytics using Python, SQL and Azure. Based in Dalarna; open to Stockholm, Gothenburg, Malmö and Uppsala. Fluent in English; basic Swedish.</p>
+
         <div class="tags" aria-label="Key skills">
           <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Azure</span>
           <span class="tag">Pandas</span><span class="tag">Power BI</span><span class="tag">Machine Learning</span>
+          <span class="tag">JavaScript</span>
         </div>
+
         <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap">
           <a class="btn" href="https://github.com/kushitec15691" target="_blank" rel="noopener">GitHub</a>
           <a class="btn" href="https://www.linkedin.com/in/kushmi-anuththara-chandrasena-04b741113/" target="_blank" rel="noopener">LinkedIn</a>
           <a class="btn" href="#contact">Contact</a>
         </div>
       </div>
+
       <div class="card pad">
         <h2>Highlights</h2>
         <div class="kpis">
-          <div class="kpi"><strong>Azure ETL</strong><br/><span class="muted">Blob ➜ ADF ➜ SQL ➜ Power BI</span></div>
-          <div class="kpi"><strong>ML Models</strong><br/><span class="muted">Classification · Forecasting</span></div>
-          <div class="kpi"><strong>Databases</strong><br/><span class="muted">Schema design · Optimization</span></div>
+          <div class="kpi">
+            <strong>Azure ETL</strong><br/>
+            <span class="muted">Blob → ADF → Databricks (PySpark) → Azure SQL → Power BI</span>
+          </div>
+          <div class="kpi">
+            <strong>ML Models</strong><br/>
+            <span class="muted">Logistic/Linear Regression, Random Forest, XGBoost, K-Means, Time Series (ARIMA/Prophet).</span>
+          </div>
+          <div class="kpi">
+            <strong>Databases</strong><br/>
+            <span class="muted">Star schema & dimensional modeling, normalization, indexing, query optimization.</span>
+          </div>
         </div>
       </div>
     </section>
@@ -162,23 +195,25 @@
       <div class="grid cols-3">
         <div class="card pad">
           <h3>Core</h3>
-          <p class="muted">Python, SQL, Git, Linux, Docker</p>
+          <p class="muted">Python, SQL, Git, Linux, Docker, JavaScript, Excel</p>
           <div class="tags">
             <span class="badge">Pandas</span><span class="badge">NumPy</span><span class="badge">Matplotlib</span><span class="badge">scikit-learn</span>
+            <span class="badge">PySpark</span><span class="badge">Agile/Scrum</span>
           </div>
         </div>
         <div class="card pad">
           <h3>Cloud & Data</h3>
-          <p class="muted">Azure Data Factory, Blob Storage, Azure SQL, Power BI</p>
+          <p class="muted">Azure Data Factory, Databricks, Data Lake/Blob, Azure SQL, Power BI</p>
           <div class="tags">
             <span class="badge">ETL</span><span class="badge">Data Modeling</span><span class="badge">Pipelines</span><span class="badge">CI/CD</span>
+            <span class="badge">Azure DevOps</span>
           </div>
         </div>
         <div class="card pad">
           <h3>ML & Analytics</h3>
-          <p class="muted">Regression, Classification, Time Series</p>
+          <p class="muted">Regression, Classification, Clustering, Time Series, Experimentation</p>
           <div class="tags">
-            <span class="badge">Feature Eng</span><span class="badge">Evaluation</span><span class="badge">MLOps (basics)</span><span class="badge">Experimentation</span>
+            <span class="badge">Feature Eng</span><span class="badge">Evaluation</span><span class="badge">MLflow (basics)</span><span class="badge">MLOps (basics)</span>
           </div>
         </div>
       </div>
@@ -191,15 +226,15 @@
           <h3>Sogeti (Capgemini) — BI/Data Analytics Intern</h3>
           <p class="muted">Borlänge, Sweden</p>
           <ul>
-            <li>Azure ETL (ADF → Databricks → SQL) with Medallion layers; data flows & lineage documentation.</li>
-            <li>Power BI dashboards for lead-time variance & on-time delivery.</li>
+            <li>Azure ETL (ADF → Databricks → SQL) with Medallion layers; data flows and lineage documentation.</li>
+            <li>Power BI dashboards for lead-time variance and on-time delivery.</li>
             <li>Fact/dimension modeling and data-quality checks with analytics engineers.</li>
           </ul>
         </div>
         <div class="card pad">
           <h3>WAOConnect — BI & Functional Consultant</h3>
           <ul>
-            <li>Integrated Shopify/eBay/Xero; automated Python reports.</li>
+            <li>Integrated Shopify/eBay/Xero and automated Python reports.</li>
             <li>Dashboards for sales, returns, stock trends (Power BI/Tableau).</li>
             <li>Client workshops to enable self-service BI.</li>
           </ul>
@@ -207,8 +242,8 @@
         <div class="card pad">
           <h3>Cin7 — ERP Support & Implementation</h3>
           <ul>
-            <li>Master-data migration & quality (≈99% accuracy across modules).</li>
-            <li>Power BI views for inventory sync & sales; reduced stock discrepancies.</li>
+            <li>Master-data migration and quality (≈99% accuracy across modules).</li>
+            <li>Power BI views for inventory sync and sales; reduced stock discrepancies.</li>
             <li>Automations via APIs: Shopify, Amazon, Xero.</li>
           </ul>
         </div>
@@ -226,9 +261,11 @@
         <div class="card pad">
           <h3>MSc · Project Management — University of Bedfordshire</h3>
           <p class="muted">2019–2021</p>
-          <p>Strategic PM, Research Methods, Risk & Quality, Agile & Waterfall.</p>
+          <p>Strategic PM, Research Methods, Risk & Quality, Agile and Waterfall delivery.</p>
+
           <h3 style="margin-top:12px">BSc (Hons) · Software & Business Information Systems — Cardiff Metropolitan University</h3>
           <p class="muted">2015–2018 · First Class Honors (Top of Batch)</p>
+          <p>Focus on Business Intelligence, ERP Systems and Cybersecurity. Final project: E-commerce Analytics Dashboard using Power BI and SQL.</p>
         </div>
       </div>
     </section>
@@ -237,8 +274,8 @@
       <h2>About</h2>
       <div class="card pad">
         <img class="about-photo" src="1691681327177.jpg" alt="Kushmi Anuththara Chandrasena" />
-        <p>I’m Kushmi Anuththara Chandrasena, a data professional completing a second Master’s in Data Science. I bring five years of IT experience across data analysis, databases and cloud, with a strong focus on Python, SQL, Azure and BI.</p>
-        <p>I’m seeking early-career roles in Sweden that offer work-permit sponsorship — Data Analyst, BI Developer or Junior Data Engineer — in Stockholm, Gothenburg, Malmö or Uppsala. Fluent in English, learning Swedish (basic level).</p>
+        <p style="font-size:18px"><strong>I’m Kushmi Anuththara Chandrasena</strong>, a data professional completing a second Master’s in Data Science. I bring five years of IT experience across data analysis, databases and cloud, with a strong focus on Python, SQL, Azure and BI.</p>
+        <p>I’m seeking early-career roles in Sweden that offer work-permit sponsorship in Stockholm, Gothenburg, Malmö or Uppsala — Data Analyst, BI Developer or Junior Data Engineer. Fluent in English; learning Swedish (basic level).</p>
       </div>
     </section>
 
@@ -272,7 +309,6 @@
     <small>© <span id="year"></span> Kushmi Anuththara Chandrasena. Built with HTML/CSS/JS. Hosted on GitHub Pages.</small>
   </footer>
 
-  <!-- JS -->
   <script>
   (() => {
     // theme
@@ -283,14 +319,14 @@
       modeBtn.addEventListener('click', () => {
         document.documentElement.classList.toggle('light');
         localStorage.setItem('mode', document.documentElement.classList.contains('light') ? 'light' : 'dark');
-        bg.recolor(); // update background colors on theme change
+        bg.recolor();
       });
     }
     // year
     const y = document.getElementById('year');
     if (y) y.textContent = new Date().getFullYear();
 
-    // projects (images use root-level files you uploaded)
+    // projects
     const projects = [
       { title:'Inbound Supply-Chain Dashboard',
         blurb:'Python + Azure SQL + Power BI to track lifecycle KPIs; helped identify bottlenecks and cut material waste by ~12%.',
@@ -353,7 +389,7 @@
       const c = document.getElementById('data-bg');
       const ctx = c.getContext('2d');
       let w, h, dpr, nodes, phase = 0, motionOK = !matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const NODES = 80; // performance-friendly
+      const NODES = 80;
 
       function colors(){
         const light = document.documentElement.classList.contains('light');
@@ -381,10 +417,10 @@
       }
 
       function step(){
-        if(!motionOK) return; // respects reduced motion
+        if(!motionOK) return;
         ctx.clearRect(0,0,w,h);
 
-        // flowing “sparkline” graphs
+        // flowing graphs
         phase += 0.008;
         drawSparkline(0.22, 32);
         drawSparkline(0.50, 24);
@@ -399,11 +435,9 @@
           if(p.x<-10) p.x=w+10; if(p.x>w+10) p.x=-10;
           if(p.y<-10) p.y=h+10; if(p.y>h+10) p.y=-10;
 
-          // dots
           ctx.fillStyle = palette.dot;
           ctx.beginPath(); ctx.arc(p.x, p.y, 1.6, 0, Math.PI*2); ctx.fill();
 
-          // links
           for(let j=i+1;j<nodes.length;j++){
             const q = nodes[j];
             const dx = p.x-q.x, dy=p.y-q.y, dist = Math.hypot(dx,dy);
@@ -423,7 +457,7 @@
         ctx.strokeStyle = line; ctx.lineWidth = 2;
         ctx.beginPath();
         const yBase = h*yFrac;
-        const k = 0.008; // frequency
+        const k = 0.008;
         for(let x=0;x<=w;x+=8){
           const y = yBase + Math.sin((x*k)+phase*2)*amplitude*0.6 + Math.cos((x*k*0.7)+phase)*amplitude*0.4;
           if(x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
@@ -432,9 +466,7 @@
       }
 
       function recolor(){ palette = colors(); }
-      function start(){
-        resize(); initNodes(); if(motionOK) requestAnimationFrame(step);
-      }
+      function start(){ resize(); initNodes(); if(motionOK) requestAnimationFrame(step); }
       window.addEventListener('resize', resize, {passive:true});
       start();
       return {recolor};
